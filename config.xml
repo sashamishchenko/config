@@ -36,17 +36,19 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
     <hudson.triggers.SCMTrigger>
-      <spec>H/5 * * * *</spec>
+      <spec>H/2 * * * *</spec>
       <ignorePostCommitHooks>false</ignorePostCommitHooks>
     </hudson.triggers.SCMTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>sudo apt-get install python-pip python-dev build-essential 
-sudo pip install bottle
-python /var/lib/jenkins/workspace/hello/hello.py &amp;
-sleep 300</command>
+      <command>ssh jenkins@127.0.0.1 ps aux | greppython &amp;&amp; killall python
+scp /var/lib/jenkins/workspace/hello/hello.py jenkins@127.0.0.1:
+ssh jenkins@127.0.0.1 sudo apt-get install python-pip python-dev build-essential 
+ssh jenkins@127.0.0.1 sudo pip install bottle
+ssh jenkins@127.0.0.1 python /var/lib/jenkins/hello.py &amp;
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
